@@ -16,11 +16,20 @@ func TestIsolate(t *testing.T) {
 		{
 			name: "TestIsolate",
 			args: args{
-				target:              1234567890,
+				target:              1234_5678_90,
 				lowestDecimalDigit:  2,
 				highestDecimalDigit: 6,
 			},
 			want: 5678,
+		},
+		{
+			name: "go doc",
+			args: args{
+				target:              1098_76_54321,
+				lowestDecimalDigit:  5,
+				highestDecimalDigit: 7,
+			},
+			want: 76,
 		},
 	}
 	for _, tt := range tests {
