@@ -1,4 +1,4 @@
-package numbers
+package ints
 
 import "golang.org/x/exp/constraints"
 
