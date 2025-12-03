@@ -1,4 +1,4 @@
-package day_2
+package day_3
 
 import (
 	"aoc-2025/internal/disk_io"
@@ -19,14 +19,14 @@ func TestPart1(t *testing.T) {
 			args: args{
 				lines: disk_io.ReadLines("example-input.txt"),
 			},
-			want: "1227775554",
+			want: "357",
 		},
 		{
 			name: "actual",
 			args: args{
 				lines: disk_io.ReadLines("input.txt"),
 			},
-			want: "19574776074",
+			want: "17493",
 		},
 	}
 	for _, tt := range tests {
@@ -52,14 +52,14 @@ func TestPart2(t *testing.T) {
 			args: args{
 				lines: disk_io.ReadLines("example-input.txt"),
 			},
-			want: "4174379265",
+			want: "3121910778619",
 		},
 		{
 			name: "actual",
 			args: args{
 				lines: disk_io.ReadLines("input.txt"),
 			},
-			want: "25912654282",
+			want: "173685428989126",
 		},
 	}
 	for _, tt := range tests {

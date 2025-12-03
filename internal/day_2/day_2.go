@@ -96,7 +96,6 @@ func part2(lines []string) string {
 			}
 			if same {
 				sillySum += productId
-				println(productId, compared)
 				break
 			}
 		}
