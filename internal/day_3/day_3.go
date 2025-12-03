@@ -3,19 +3,10 @@ package day_3
 import (
 	"math"
 	"strconv"
-	"strings"
 )
 
 type batteryBank struct {
 	batteries []int
-}
-
-func (b *batteryBank) String() string {
-	var sb strings.Builder
-	for _, b := range b.batteries {
-		sb.WriteString(strconv.Itoa(b))
-	}
-	return sb.String()
 }
 
 func (b *batteryBank) maxJoltage(size int) int64 {
