@@ -59,7 +59,7 @@ func TestPart2(t *testing.T) {
 			args: args{
 				lines: disk_io.ReadLines("input.txt"),
 			},
-			want: "???",
+			want: "8366",
 		},
 	}
 	for _, tt := range tests {
