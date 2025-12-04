@@ -5,18 +5,6 @@ import (
 	"strconv"
 )
 
-func part1(lines []string) string {
-	floor := parseLines(lines)
-	count := 0
-	for item := range floor.items() {
-		if item.accessibleToForkLifts() {
-			count++
-		}
-	}
-
-	return strconv.Itoa(count)
-}
-
 type gridLocation struct {
 	row int
 	col int
@@ -86,6 +74,10 @@ func (f *printFloor) items() iter.Seq[item] {
 	}
 }
 
+func (f *printFloor) remove(i item) {
+	delete(f.grid, i.location)
+}
+
 func parseLines(lines []string) *printFloor {
 	floor := &printFloor{
 		grid: make(map[gridLocation]item),
@@ -106,7 +98,34 @@ func parseLines(lines []string) *printFloor {
 	return floor
 }
 
-func part2(lines []string) string {
+func part1(lines []string) string {
+	floor := parseLines(lines)
+	count := 0
+	for item := range floor.items() {
+		if item.accessibleToForkLifts() {
+			count++
+		}
+	}
 
-	return ""
+	return strconv.Itoa(count)
+}
+
+func part2(lines []string) string {
+	floor := parseLines(lines)
+	count := 0
+	for {
+		changed := false
+		for item := range floor.items() {
+			if item.accessibleToForkLifts() {
+				count++
+				floor.remove(item)
+				changed = true
+			}
+		}
+		if !changed {
+			break
+		}
+	}
+
+	return strconv.Itoa(count)
 }
