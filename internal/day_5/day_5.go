@@ -67,22 +67,23 @@ func part2(lines []string) string {
 	sort.Slice(freshRanges, func(i, j int) bool {
 		return freshRanges[i].Min < freshRanges[j].Min
 	})
-	unprocessed := make([]*int_range.IntRange, 0)
+
 	for len(freshRanges) > 0 {
-		combinedRange := freshRanges[0]
+		unprocessed = make([]*int_range.IntRange, 0)
+		current := freshRanges[0]
 		for i := 1; i < len(freshRanges); i++ {
-			if newCombination, ok := combinedRange.Combine(freshRanges[i]); ok {
-				combinedRange = newCombination
+			toBeProcessed := freshRanges[i]
+			if newCombination, ok := current.Combine(toBeProcessed); ok {
+				current = newCombination
 			} else {
-				unprocessed = append(unprocessed, freshRanges[i])
+				unprocessed = append(unprocessed, toBeProcessed)
 			}
 		}
-		combinedRanges = append(combinedRanges, combinedRange)
+		combinedRanges = append(combinedRanges, current)
 		freshRanges = unprocessed
-		unprocessed = make([]*int_range.IntRange, 0)
 	}
+	
 	var count int64
-
 	for _, freshRange := range combinedRanges {
 		count += freshRange.Size()
 	}
