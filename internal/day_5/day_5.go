@@ -69,7 +69,7 @@ func part2(lines []string) string {
 	})
 
 	for len(freshRanges) > 0 {
-		unprocessed = make([]*int_range.IntRange, 0)
+		unprocessed := make([]*int_range.IntRange, 0)
 		current := freshRanges[0]
 		for i := 1; i < len(freshRanges); i++ {
 			toBeProcessed := freshRanges[i]
@@ -82,7 +82,7 @@ func part2(lines []string) string {
 		combinedRanges = append(combinedRanges, current)
 		freshRanges = unprocessed
 	}
-	
+
 	var count int64
 	for _, freshRange := range combinedRanges {
 		count += freshRange.Size()

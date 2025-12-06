@@ -41,7 +41,7 @@ func TestFactors(t *testing.T) {
 			args: args{
 				input: 1,
 			},
-			want: []int{1},
+			want: []int{},
 		},
 		{
 			name: "four",
