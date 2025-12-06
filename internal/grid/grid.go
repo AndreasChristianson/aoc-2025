@@ -1,6 +1,8 @@
 package grid
 
-import "iter"
+import (
+	"iter"
+)
 
 type Location struct {
 	row, col int
@@ -44,15 +46,20 @@ func (i *Item[V]) Neighbors(distance int) iter.Seq[*Item[V]] {
 }
 
 type Grid[V any] struct {
-	Items map[Location]*Item[V]
+	Items  map[Location]*Item[V]
+	Width  int
+	Height int
 }
 
 func New[V any](lines []string, categorizer func(int32) (V, bool)) *Grid[V] {
 	grid := &Grid[V]{
-		Items: make(map[Location]*Item[V]),
+		Items:  make(map[Location]*Item[V]),
+		Height: len(lines),
 	}
-	for col, line := range lines {
-		for row, char := range line {
+	width := -1
+	for row, line := range lines {
+		width = max(width, len(line))
+		for col, char := range line {
 			if parsed, ok := categorizer(char); ok {
 				location := At(row, col)
 				grid.Items[location] = &Item[V]{
@@ -63,6 +70,7 @@ func New[V any](lines []string, categorizer func(int32) (V, bool)) *Grid[V] {
 			}
 		}
 	}
+	grid.Width = width
 	return grid
 }
 
@@ -88,4 +96,17 @@ func (g *Grid[V]) Locations() iter.Seq[Location] {
 
 func (g *Grid[V]) Remove(i *Item[V]) {
 	delete(g.Items, i.Location)
+}
+
+func (g *Grid[V]) Get(row int, col int) (V, bool) {
+	return g.GetByLocation(At(row, col))
+}
+
+func (g *Grid[V]) GetByLocation(at Location) (V, bool) {
+	if val, ok := g.Items[at]; ok {
+		return val.Value, ok
+	} else {
+		return *new(V), false
+	}
+
 }

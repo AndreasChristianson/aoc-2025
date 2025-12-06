@@ -19,14 +19,14 @@ func TestPart1(t *testing.T) {
 			args: args{
 				lines: disk_io.ReadLines("example-input.txt"),
 			},
-			want: "?",
+			want: "4277556",
 		},
 		{
 			name: "actual",
 			args: args{
 				lines: disk_io.ReadLines("input.txt"),
 			},
-			want: "?",
+			want: "4693159084994",
 		},
 	}
 	for _, tt := range tests {
@@ -52,14 +52,14 @@ func TestPart2(t *testing.T) {
 			args: args{
 				lines: disk_io.ReadLines("example-input.txt"),
 			},
-			want: "?",
+			want: "3263827",
 		},
 		{
 			name: "actual",
 			args: args{
 				lines: disk_io.ReadLines("input.txt"),
 			},
-			want: "?",
+			want: "11643736116335",
 		},
 	}
 	for _, tt := range tests {
