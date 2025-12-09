@@ -3,7 +3,7 @@ package day_7
 import (
 	"aoc-2025/internal/graph"
 	"aoc-2025/internal/grid"
-	"aoc-2025/internal/int_point"
+	"aoc-2025/internal/int_point/int_point_2d"
 	"strconv"
 )
 
@@ -27,7 +27,7 @@ func traverse(field *grid.Grid[object]) (
 	ret = graph.NewDirectedGraph[node]()
 	end = ret.CreateNode(node{
 		nodeType:     final,
-		nodeLocation: int_point.At(field.Height, field.Width/2),
+		nodeLocation: int_point_2d.At(field.Height, field.Width/2),
 	})
 	for sourceItem := range field.Find(source) {
 		start = ret.CreateNode(node{
@@ -45,7 +45,7 @@ func propagate(
 	dg *graph.DirectedGraph[node],
 	end *graph.DirectedGraphNode[node],
 	from *graph.DirectedGraphNode[node],
-	location int_point.Location,
+	location int_point_2d.Location,
 ) {
 	for ; ; location = location.Down() {
 		if val, found := field.GetByLocation(location); !found {
@@ -71,7 +71,7 @@ func propagate(
 
 type node struct {
 	nodeType     object
-	nodeLocation int_point.Location
+	nodeLocation int_point_2d.Location
 }
 type object string
 
@@ -79,8 +79,7 @@ const (
 	splitter object = "^"
 	source   object = "S"
 	empty    object = "."
-	//tachyon  object = "|"
-	final object = "final"
+	final    object = "final"
 )
 
 func spliterParser(char int32) (object, bool) {

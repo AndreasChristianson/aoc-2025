@@ -1,4 +1,4 @@
-package int_point
+package int_point_2d
 
 type Location struct {
 	Row, Col int

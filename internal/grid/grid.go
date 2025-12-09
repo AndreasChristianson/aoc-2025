@@ -1,14 +1,14 @@
 package grid
 
 import (
-	"aoc-2025/internal/int_point"
+	"aoc-2025/internal/int_point/int_point_2d"
 	"iter"
 	"slices"
 )
 
 type Item[V comparable] struct {
 	Value    V
-	Location int_point.Location
+	Location int_point_2d.Location
 	parent   *Grid[V]
 	tags     []string
 }
@@ -24,7 +24,7 @@ func (i *Item[V]) Neighbors(distance int) iter.Seq[*Item[V]] {
 				if rowDelta == 0 && colDelta == 0 {
 					continue
 				}
-				location := int_point.At(
+				location := int_point_2d.At(
 					rowDelta+i.Location.Row,
 					colDelta+i.Location.Col,
 				)
@@ -45,14 +45,14 @@ func (i *Item[V]) Tag(tag string) {
 }
 
 type Grid[V comparable] struct {
-	Items  map[int_point.Location]*Item[V]
+	Items  map[int_point_2d.Location]*Item[V]
 	Width  int
 	Height int
 }
 
 func New[V comparable](lines []string, categorizer func(int32) (V, bool)) *Grid[V] {
 	grid := &Grid[V]{
-		Items:  make(map[int_point.Location]*Item[V]),
+		Items:  make(map[int_point_2d.Location]*Item[V]),
 		Height: len(lines),
 	}
 	width := -1
@@ -60,7 +60,7 @@ func New[V comparable](lines []string, categorizer func(int32) (V, bool)) *Grid[
 		width = max(width, len(line))
 		for col, char := range line {
 			if parsed, ok := categorizer(char); ok {
-				location := int_point.At(row, col)
+				location := int_point_2d.At(row, col)
 				grid.Items[location] = grid.NewItem(location, parsed)
 			}
 		}
@@ -79,8 +79,8 @@ func (g *Grid[V]) Values() iter.Seq[*Item[V]] {
 	}
 }
 
-func (g *Grid[V]) Locations() iter.Seq[int_point.Location] {
-	return func(yield func(location int_point.Location) bool) {
+func (g *Grid[V]) Locations() iter.Seq[int_point_2d.Location] {
+	return func(yield func(location int_point_2d.Location) bool) {
 		for key, _ := range g.Items {
 			if !yield(key) {
 				return
@@ -94,10 +94,10 @@ func (g *Grid[V]) Remove(i *Item[V]) {
 }
 
 func (g *Grid[V]) Get(row int, col int) (V, bool) {
-	return g.GetByLocation(int_point.At(row, col))
+	return g.GetByLocation(int_point_2d.At(row, col))
 }
 
-func (g *Grid[V]) GetByLocation(at int_point.Location) (V, bool) {
+func (g *Grid[V]) GetByLocation(at int_point_2d.Location) (V, bool) {
 	if val, ok := g.Items[at]; ok {
 		return val.Value, ok
 	} else {
@@ -131,7 +131,7 @@ func (g *Grid[V]) FindWithoutTag(value V, tag string) iter.Seq[*Item[V]] {
 
 }
 
-func (g *Grid[V]) Set(location int_point.Location, value V) bool {
+func (g *Grid[V]) Set(location int_point_2d.Location, value V) bool {
 	if oldItem, ok := g.Items[location]; ok && oldItem.Value == value {
 		return false
 	}
@@ -139,7 +139,7 @@ func (g *Grid[V]) Set(location int_point.Location, value V) bool {
 	return true
 }
 
-func (g *Grid[V]) NewItem(location int_point.Location, value V) *Item[V] {
+func (g *Grid[V]) NewItem(location int_point_2d.Location, value V) *Item[V] {
 	return &Item[V]{
 		Value:    value,
 		Location: location,
