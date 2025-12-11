@@ -5,6 +5,7 @@ import (
 	"aoc-2025/internal/ints"
 	aocslices "aoc-2025/internal/slices"
 	"aoc-2025/internal/strings"
+	"fmt"
 	"iter"
 	"regexp"
 	"slices"
@@ -224,6 +225,7 @@ main:
 		rects := pattern.rectanglesBySize[size]
 	nextRect:
 		for _, rect := range rects {
+			fmt.Printf("starting rect %v\n", sizeIndex)
 			for point := range rect.border() {
 				if !pattern.inside(point) {
 					continue nextRect
