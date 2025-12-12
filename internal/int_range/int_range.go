@@ -15,10 +15,10 @@ func (r *IntRange) Size() int64 {
 func (r *IntRange) Combine(other *IntRange) (*IntRange, bool) {
 	if r.Contains(other.Min) && r.Contains(other.Max) {
 		return r, true
-	}
+	} // `other` range inside this range
 	if other.Contains(r.Min) && other.Contains(r.Max) {
 		return other, true
-	}
+	} // this range inside `other` range
 	if r.Contains(other.Min) && other.Contains(r.Max) {
 		return New(r.Min, other.Max), true
 	}
