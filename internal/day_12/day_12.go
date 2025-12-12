@@ -5,11 +5,12 @@ import (
 )
 
 func part1(lines []string) (output string) {
+	trees := parseLines(lines)
 	var result int64
-	return strconv.FormatInt(result, 10)
-}
-
-func part2(lines []string) (output string) {
-	var result int64
+	for _, tree := range trees {
+		if tree.presentsFit() {
+			result++
+		}
+	}
 	return strconv.FormatInt(result, 10)
 }
